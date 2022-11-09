@@ -111,7 +111,8 @@ TARGET_RECOVERY_DEVICE_MODULES += \
     libion \
     libxml2 \
     vendor.display.config@1.0 \
-    vendor.display.config@2.0
+    vendor.display.config@2.0 \
+    android.hardware.boot@1.0-impl-1.1-qti
 
 # Use mke2fs to create ext4 images
 TARGET_USES_MKE2FS := true
@@ -156,6 +157,7 @@ TW_OVERRIDE_SYSTEM_PROPS := \
 RECOVERY_LIBRARY_SOURCE_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/libion.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libxml2.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/android.hardware.boot@1.0-impl-1.1-qti.so \
     $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/vendor.display.config@1.0.so \
     $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/vendor.display.config@2.0.so
 
