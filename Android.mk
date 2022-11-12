@@ -7,6 +7,6 @@
 
 LOCAL_PATH := $(call my-dir)
 
-ifeq ($(TARGET_DEVICE), avicii)
+ifeq ($(TARGET_DEVICE),avicii)
 include $(call all-subdir-makefiles,$(LOCAL_PATH))
 endif

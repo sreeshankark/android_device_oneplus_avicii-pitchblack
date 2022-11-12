@@ -7,6 +7,9 @@
 
 LOCAL_PATH := device/oneplus/avicii
 
+# Enable project quotas and casefolding for emulated storage without sdcardfs
+$(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
+
 # A/B support
 AB_OTA_UPDATER := true
 
@@ -47,16 +50,22 @@ PRODUCT_SHIPPING_API_LEVEL := 29
 
 # Boot control HAL
 PRODUCT_PACKAGES += \
-    android.hardware.boot@1.1-impl \
+    android.hardware.boot@1.0-impl \
     android.hardware.boot@1.1-service \
-    android.hardware.boot@1.1-impl-wrapper.recovery \
-    android.hardware.boot@1.1-impl.wrapper \
-    android.hardware.boot@1.1-impl.recovery \
-    bootctrl.$(PRODUCT_PLATFORM) \
-    bootctrl.$(PRODUCT_PLATFORM).recovery
-
+    android.hardware.boot@1.0-impl-wrapper.recovery \
+    android.hardware.boot@1.1-impl-qti.recovery \
+    android.hardware.boot@1.0-impl-wrapper \
+    android.hardware.boot@1.0-impl.recovery \
+    bootctrl.$(PRODUCT_PLATFORM).recovery \
+    bootctrl.$(PRODUCT_PLATFORM)
+    
 PRODUCT_PACKAGES_DEBUG += \
     bootctl
+    
+# Health HAL
+PRODUCT_PACKAGES += \
+    android.hardware.health@2.1-impl.recovery
+
 
 # Dynamic partitions
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
@@ -65,10 +74,6 @@ PRODUCT_USE_DYNAMIC_PARTITIONS := true
 PRODUCT_PACKAGES += \
     android.hardware.fastboot@1.1-impl-mock \
     fastbootd
-    
-# Health HAL
-PRODUCT_PACKAGES += \
-	android.hardware.health@2.1-impl.recovery
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \

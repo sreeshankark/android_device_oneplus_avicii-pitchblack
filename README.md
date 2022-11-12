@@ -50,7 +50,7 @@ The phone is avialable in 2 variants based on region: AC2001 (India) & AC2003 (E
 
         source build/envsetup.sh
         
-        lunch twrp_avicii-eng
+        lunch pbrp_avicii-eng
         
         mka adbd recoveryimage
         
