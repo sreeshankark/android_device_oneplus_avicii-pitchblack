@@ -19,7 +19,7 @@ $(call inherit-product, vendor/pb/config/common.mk)
 
 # Release name
 PRODUCT_RELEASE_NAME := avicii
-PRODUCT_CODENAME := avicii
+
 # Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := avicii
 PRODUCT_NAME := pbrp_avicii
