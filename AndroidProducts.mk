@@ -9,4 +9,4 @@ PRODUCT_MAKEFILES := \
     $(LOCAL_DIR)/pbrp_avicii.mk
 
 COMMON_LUNCH_CHOICES := \
-    pbrp_aviciiv2-eng
+    pbrp_avicii-eng
