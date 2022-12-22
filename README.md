@@ -1,6 +1,6 @@
-# OnePlus Nord (avicii) Device Tree for OrangeFox Recovery Build
+# OnePlus Nord (avicii) FBEv1 Device Tree for PitchBlack Recovery Build
 
-<img src="https://github.com/Sanju0910/Sanju0910/blob/main/images/of_logo.png" width=100 height=100 align="left" />  
+<img src="https://github.com/Sanju0910/Sanju0910/blob/main/images/pb_logo.png" width=100 height=100 align="left" />  
 
 
 <img src="https://github.com/Sanju0910/Sanju0910/blob/main/images/oneplus_logo.png" align="right"/>
@@ -42,7 +42,7 @@ The phone is available in 2 variants based on region: AC2001 (India) & AC2003 (E
 ### Copyright
 
         
-        # Copyright (C) 2022 The OrangeFox Recovery Project
+        # Copyright (C) 2022 The PitchBlack Recovery Project
         
         # Licensed under the Apache License, Version 2.0 (the "License");
         # you may not use this file except in compliance with the License.
