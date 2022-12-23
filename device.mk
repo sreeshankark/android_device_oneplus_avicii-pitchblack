@@ -1,21 +1,15 @@
 #
 # Copyright (C) 2022 The Android Open Source Project
-# Copyright (C) 2022 SebaUbuntu's TWRP device tree generator
+# Copyright (C) 2022 PitchBlack Recovery Project 
 #
 # SPDX-License-Identifier: Apache-2.0
 #
 
 LOCAL_PATH := device/oneplus/avicii
 
-# Enable project quotas and casefolding for emulated storage without sdcardfs
-$(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
-
 # A/B support
 AB_OTA_UPDATER := true
 
-# A/B updater updatable partitions list. Keep in sync with the partition list
-# with "_a" and "_b" variants in the device. Note that the vendor can add more
-# more partitions to this list for the bootloader and radio.
 AB_OTA_PARTITIONS += \
     boot \
     dtbo \
@@ -30,9 +24,11 @@ AB_OTA_PARTITIONS += \
 
 PRODUCT_PACKAGES += \
     otapreopt_script \
+    cppreopts.sh \
     update_engine \
-    update_engine_sideload \
-    update_verifier
+    update_verifier \
+    checkpoint_gc \
+    update_engine_sideload
 
 AB_OTA_POSTINSTALL_CONFIG += \
     RUN_POSTINSTALL_system=true \
@@ -40,39 +36,40 @@ AB_OTA_POSTINSTALL_CONFIG += \
     FILESYSTEM_TYPE_system=ext4 \
     POSTINSTALL_OPTIONAL_system=true
 
-# tell update_engine to not change dynamic partition table during updates
-# needed since our qti_dynamic_partitions does not include
-# vendor and odm and we also dont want to AB update them
-TARGET_ENFORCE_AB_OTA_PARTITION_LIST := true
+AB_OTA_POSTINSTALL_CONFIG += \
+    RUN_POSTINSTALL_vendor=true \
+    POSTINSTALL_PATH_vendor=bin/checkpoint_gc \
+    FILESYSTEM_TYPE_vendor=ext4 \
+    POSTINSTALL_OPTIONAL_vendor=true
 
+BOARD_USES_RECOVERY_AS_BOOT := false
+    
 # API
 PRODUCT_SHIPPING_API_LEVEL := 29
 
+# Dynamic Partitions
+PRODUCT_USE_DYNAMIC_PARTITIONS := true
+
 # Boot control HAL
 PRODUCT_PACKAGES += \
-    android.hardware.boot@1.0-impl \
-    android.hardware.boot@1.1-service \
-    android.hardware.boot@1.0-impl-wrapper.recovery \
-    android.hardware.boot@1.1-impl-qti.recovery \
-    android.hardware.boot@1.0-impl-wrapper \
-    android.hardware.boot@1.0-impl.recovery \
+    android.hardware.boot@1.2-impl \
+    android.hardware.boot@1.2-service \
+    android.hardware.boot@1.2-impl-wrapper.recovery \
+    android.hardware.boot@1.2-impl-wrapper \
+    android.hardware.boot@1.2-impl.recovery \
+    bootctrl.$(PRODUCT_PLATFORM) \
     bootctrl.$(PRODUCT_PLATFORM).recovery \
-    bootctrl.$(PRODUCT_PLATFORM)
     
 PRODUCT_PACKAGES_DEBUG += \
     bootctl
-    
+        
 # Health HAL
 PRODUCT_PACKAGES += \
     android.hardware.health@2.1-impl.recovery
 
-
-# Dynamic partitions
-PRODUCT_USE_DYNAMIC_PARTITIONS := true
-
 # fastbootd
 PRODUCT_PACKAGES += \
-    android.hardware.fastboot@1.1-impl-mock \
+    android.hardware.fastboot@1.0-impl-mock \
     fastbootd
 
 # Soong namespaces
@@ -82,4 +79,27 @@ PRODUCT_SOONG_NAMESPACES += \
 # qcom ncryption
 PRODUCT_PACKAGES += \
     qcom_decrypt \
-    qcom_decrypt_fbe
+    qcom_decrypt_fbe 
+
+# tzdata
+PRODUCT_PACKAGES_ENG += \
+    tzdata_twrp
+
+# Hidl Service
+PRODUCT_ENFORCE_VINTF_MANIFEST := true
+
+# Recovery
+RECOVERY_LIBRARY_SOURCE_FILES += \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libion.so \
+    $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/vendor.display.config@1.0.so \
+    $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/vendor.display.config@2.0.so \
+    $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/libdisplayconfig.qti.so
+
+# OEM otacert
+PRODUCT_EXTRA_RECOVERY_KEYS += \
+    $(LOCAL_PATH)/security/local_OTA
+    
+# Manifest
+PRODUCT_COPY_FILES += \
+    device/oneplus/avicii/manifest/system_manifest.xml:$(TARGET_COPY_OUT_RECOVERY)/root/system/manifest.xml \
+    device/oneplus/avicii/manifest/vendor_manifest.xml:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/manifest.xml
