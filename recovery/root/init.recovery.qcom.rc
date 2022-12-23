@@ -58,6 +58,7 @@ on init
     write /sys/class/backlight/panel0-backlight/brightness 200
     setprop sys.usb.configfs 1
     mkdir /dev/fscklogs 0770 root system
+    mkdir /pb_temp 0770 root root
     
 on boot
     start boot-hal-1-1
