@@ -47,6 +47,13 @@ service qti.vibrator-1-2 /system/bin/vendor.qti.hardware.vibrator@1.2-service
     setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib:/system/lib64:/system/lib:/sbin
     seclabel u:r:recovery:s0
     
+service wrappedkey-fix /system/bin/wrappedkey-fix.sh
+    user root
+    group root
+    disabled
+    oneshot
+    seclabel u:r:recovery:s0
+    
 on init
     write /sys/class/backlight/panel0-backlight/brightness 200
     setprop sys.usb.configfs 1
@@ -62,6 +69,10 @@ on boot
 on property:ro.boot.usbcontroller=*
     setprop sys.usb.controller ${ro.boot.usbcontroller}
     write /sys/class/udc/${ro.boot.usbcontroller}/device/../mode peripheral
+    
+on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
+    chmod 0777 /system/bin/wrappedkey-fix.sh
+    start wrappedkey-fix
 
 on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
@@ -70,5 +81,9 @@ on fs
     symlink /dev/block/bootdevice/by-name/oem_stanvbk /dev/block/bootdevice/by-name/oem_stanvbk_b
     symlink /dev/block/bootdevice/by-name/oem_dycnvbk /dev/block/bootdevice/by-name/oem_dycnvbk_a
     symlink /dev/block/bootdevice/by-name/oem_dycnvbk /dev/block/bootdevice/by-name/oem_dycnvbk_b
+    symlink /dev/block/bootdevice/by-name/oppostanvbk /dev/block/bootdevice/by-name/oppostanvbk_a
+    symlink /dev/block/bootdevice/by-name/oppostanvbk /dev/block/bootdevice/by-name/oppostanvbk_b
+    symlink /dev/block/bootdevice/by-name/oppodycnvbk /dev/block/bootdevice/by-name/oppodycnvbk_a
+    symlink /dev/block/bootdevice/by-name/oppodycnvbk /dev/block/bootdevice/by-name/oppodycnvbk_b
     chown root system /dev/fscklogs/log
     chmod 0770 /dev/fscklogs/log
