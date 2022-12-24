@@ -18,4 +18,5 @@ cc_library {
     name: "bootctrl.lito",
     defaults: ["bootctrl_hal_defaults"],
     static_libs: ["libgptutils"],
-    }
+    }g
+    
