@@ -11,6 +11,7 @@ file_getprop() {
 
 fix_unwrap_decryption() {
 echo "Starting wrappedkey-fix-service..." >> $LOGF;
+mkdir -p /BFiles/temp;
 local D=/BFiles/temp/system_prop;
 local S=/dev/block/bootdevice/by-name/system;
 local F=/BFiles/temp/system-build.prop;
