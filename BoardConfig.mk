@@ -1,14 +1,16 @@
 #
-# Copyright (C) 2022 The Android Open Source Project
-# Copyright (C) 2022 PitchBlack Recovery Project
+# Copyright (C) 2023 The Android Open Source Project
+# Copyright (C) 2023 PitchBlack Recovery Project
 #
 # SPDX-License-Identifier: Apache-2.0
 #
 
 DEVICE_PATH := device/oneplus/avicii
 
-# For building with minimal manifest
+# 12.1 Manifest Requirements 
 ALLOW_MISSING_DEPENDENCIES := true
+BUILD_BROKEN_DUP_RULES := true
+BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
 
 # Architecture
 TARGET_ARCH := arm64
@@ -26,11 +28,12 @@ TARGET_2ND_CPU_VARIANT := cortex-a76
 ENABLE_CPUSETS := true
 ENABLE_SCHEDBOOST := true
 
-# APEX
-DEXPREOPT_GENERATE_APEX_IMAGE := true
+# 64-bit
+TARGET_SUPPORTS_64_BIT_APPS := true
+TARGET_IS_64_BIT := true
 
 # Assert
-TARGET_OTA_ASSERT_DEVICE := avicii,OnePlusNord,Nord,ossi,AC2001,AC2003,OnePlus Nord
+TARGET_OTA_ASSERT_DEVICE := avicii,Nord,AC2001,AC2003
 
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := $(PRODUCT_PLATFORM)
@@ -89,7 +92,7 @@ TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
 # Partition Info
 BOARD_FLASH_BLOCK_SIZE := 262144 # (BOARD_KERNEL_PAGESIZE * 64)
 BOARD_USES_PRODUCTIMAGE := true
-BOARD_BOOTIMAGE_PARTITION_SIZE := 104857600
+BOARD_BOOTIMAGE_PARTITION_SIZE := 100663296
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 104857600
 BOARD_SYSTEMIMAGE_JOURNAL_SIZE := 0
 BOARD_SYSTEMIMAGE_EXTFS_INODE_COUNT := 4096
@@ -99,38 +102,35 @@ BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := f2fs
 BOARD_BUILD_SYSTEM_ROOT_IMAGE := false
 BOARD_HAS_LARGE_FILESYSTEM := true
+BOARD_SUPPRESS_SECURE_ERASE := true
+# Partition Info: Dynamic Partitions
+BOARD_QTI_DYNAMIC_PARTITIONS_PARTITION_LIST := odm product system system_ext vendor
+BOARD_QTI_DYNAMIC_PARTITIONS_SIZE := 7511998464
+BOARD_SUPER_PARTITION_GROUPS := qti_dynamic_partitions
+BOARD_SUPER_PARTITION_SIZE := 15032385536
 
 # Recovery 
-BOARD_SUPPRESS_SECURE_ERASE := true
 TARGET_NO_RECOVERY := false
 TARGET_RECOVERY_DEVICE_MODULES += \
     libion \
     libxml2 \
     android.hidl.base@1.0 \
+    bootctrl.$(PRODUCT_PLATFORM).recovery \
     ashmemd \
     ashmemd_aidl_interface-cpp \
-    bootctrl.$(TARGET_BOARD_PLATFORM).recovery \
     libashmemd_client \
     libcap \
     libpcrecpp
+    
+# APEX
+DEXPREOPT_GENERATE_APEX_IMAGE := true
 
-# Partitions (listed in the file) to be wiped under recovery
+# Partitions that should be wiped under recovery 
 TARGET_RECOVERY_WIPE := $(DEVICE_PATH)/recovery/root/system/etc/recovery.wipe
 
-# Recovery fstab
+# Recovery Fstab
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery.fstab
 
-# Dynamic Partitions
-BOARD_SUPER_PARTITION_GROUPS := qti_dynamic_partitions
-BOARD_SUPER_PARTITION_SIZE := 15032385536
-BOARD_QTI_DYNAMIC_PARTITIONS_SIZE := 751199846
-BOARD_QTI_DYNAMIC_PARTITIONS_PARTITION_LIST := \
-	system \
-	system_ext \
-	vendor \
-	product  \
-	odm 
-	
 # Workaround for error copying vendor files to recovery ramdisk
 BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
@@ -148,21 +148,21 @@ BOARD_AVB_VBMETA_SYSTEM_ALGORITHM := SHA256_RSA2048
 BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX := $(PLATFORM_SECURITY_PATCH_TIMESTAMP)
 BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX_LOCATION := 1
 BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --set_hashtree_disabled_flag
-BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
+BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 2
 
 # Encryption
 BOARD_USES_METADATA_PARTITION := true
 BOARD_USES_QCOM_FBE_DECRYPTION := true
 TW_INCLUDE_FBE_METADATA_DECRYPT := true
 PLATFORM_SECURITY_PATCH := 2127-12-31
-TW_USE_FSCRYPT_POLICY := 2
 PLATFORM_VERSION := 99.87.36
+TW_USE_FSCRYPT_POLICY := 1
 PLATFORM_VERSION_LAST_STABLE := $(PLATFORM_VERSION)
 TW_INCLUDE_CRYPTO := true
 TW_INCLUDE_CRYPTO_FBE := true
 VENDOR_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
 
-# TWRP specific build flags
+# TWRP Specific Build Flags
 TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
 TARGET_RECOVERY_QCOM_RTC_FIX := true
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /config/usb_gadget/g1/functions/mass_storage.0/lun.%d/file
@@ -171,33 +171,28 @@ TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
 TW_CUSTOM_CPU_TEMP_PATH := "/sys/devices/virtual/thermal/thermal_zone94/temp"
 TW_EXCLUDE_TWRPAPP := true
 TW_FRAMERATE := 60
-TW_USE_TOOLBOX := true
 TW_H_OFFSET := -103
 TW_Y_OFFSET := 103
+TW_USE_TOOLBOX := true
 TW_DEFAULT_BRIGHTNESS := 200
 TW_EXCLUDE_DEFAULT_USB_INIT := true
 TW_EXCLUDE_ENCRYPTED_BACKUPS := false
 TW_EXTRA_LANGUAGES := true
-TW_NO_BIND_SYSTEM := true
-TW_NO_EXFAT_FUSE := true
 TW_INCLUDE_REPACKTOOLS := true
 TW_HAS_EDL_MODE := true
 TW_NO_USB_STORAGE := false
 TW_NO_SCREEN_BLANK := true
 TW_SCREEN_BLANK_ON_BOOT := true
+TW_NO_BIND_SYSTEM := true
+TW_NO_EXFAT_FUSE := true
 TW_INCLUDE_NTFS_3G := true
 TW_EXCLUDE_TWRPAPP := true
 TW_INCLUDE_RESETPROP := true
 TW_INCLUDE_FASTBOOTD := true
 TW_BACKUP_EXCLUSIONS := /data/nandswap
 TW_INPUT_BLACKLIST := "hbtp_vm"
-TW_SYSTEM_BUILD_PROP_ADDITIONAL_PATHS := build.prop
 TW_OVERRIDE_SYSTEM_PROPS := "ro.build.fingerprint=ro.system.build.fingerprint;ro.build.version.incremental"
-
-TW_RECOVERY_ADDITIONAL_RELINK_BINARY_FILES += \
-    $(TARGET_OUT_EXECUTABLES)/ashmemd \
-    $(TARGET_OUT_EXECUTABLES)/strace
-    
+TW_RECOVERY_ADDITIONAL_RELINK_BINARY_FILES += $(TARGET_OUT_EXECUTABLES)/ashmemd 
 TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/android.hidl.base@1.0.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/ashmemd_aidl_interface-cpp.so \
@@ -207,15 +202,16 @@ TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/libion.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libxml2.so 
 
-# PBRP specific build flags 
+# PBRP Specific Build Flags
 PB_DISABLE_DEFAULT_TREBLE_COMP := true
 PB_TORCH_PATH := "/sys/class/leds/led:torch_0"
 PB_DISABLE_DEFAULT_DM_VERITY := true
-PB_DEVICE_RATIO := "20:9"
-    
+PB_DEVICE_RATIO := "20:9"    
+
 # TWRP Debug Flags
 TARGET_USES_LOGD := true
-TWRP_EVENT_LOGGING := false
 TWRP_INCLUDE_LOGCAT := true
 TARGET_RECOVERY_DEVICE_MODULES += debuggerd
 RECOVERY_BINARY_SOURCE_FILES += $(TARGET_OUT_EXECUTABLES)/debuggerd
+TARGET_RECOVERY_DEVICE_MODULES += strace
+RECOVERY_BINARY_SOURCE_FILES += $(TARGET_OUT_EXECUTABLES)/strace
