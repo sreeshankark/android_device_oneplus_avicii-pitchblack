@@ -11,11 +11,11 @@ file_getprop() {
 
 fix_unwrap_decryption() {
 echo "Starting wrappedkey-fix-service..." >> $LOGF;
-local D=/FFiles/temp/system_prop;
+local D=/BFiles/temp/system_prop;
 local S=/dev/block/bootdevice/by-name/system;
-local F=/FFiles/temp/system-build.prop;
+local F=/BFiles/temp/system-build.prop;
 local found=0;
-    cd /FFiles/temp/;
+    cd /BFiles/temp/;
     mkdir -p $D;
     mount -r $S $D;
     cp $D/system/build.prop $F;
@@ -46,13 +46,7 @@ local found=0;
     rm $F;
 }
 
-V=$(getprop "ro.orangefox.variant");
-
-[ "$V" = "FBEv1" ];
-
 fix_unwrap_decryption;
-
-[ "$V" != "FBEv1" ];
 
 exit 0;
 #
