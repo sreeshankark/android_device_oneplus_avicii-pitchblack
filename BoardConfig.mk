@@ -121,9 +121,6 @@ TARGET_RECOVERY_DEVICE_MODULES += \
     libashmemd_client \
     libcap \
     libpcrecpp
-    
-# APEX
-DEXPREOPT_GENERATE_APEX_IMAGE := true
 
 # Partitions that should be wiped under recovery 
 TARGET_RECOVERY_WIPE := $(DEVICE_PATH)/recovery/root/system/etc/recovery.wipe
@@ -177,6 +174,7 @@ TW_USE_TOOLBOX := true
 TW_DEFAULT_BRIGHTNESS := 200
 TW_EXCLUDE_DEFAULT_USB_INIT := true
 TW_EXCLUDE_ENCRYPTED_BACKUPS := false
+TW_EXCLUDE_APEX := true
 TW_EXTRA_LANGUAGES := true
 TW_INCLUDE_REPACKTOOLS := true
 TW_HAS_EDL_MODE := true
