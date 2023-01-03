@@ -1,4 +1,4 @@
-# OnePlus Nord (avicii) FBEv2 Device Tree for PitchBlack Recovery Build
+# OnePlus Nord (avicii) Device Tree for PitchBlack Recovery Build
 
 <img src="https://github.com/Sanju0910/Sanju0910/blob/main/images/pb_logo.png" width=100 height=100 align="left" />  
 
