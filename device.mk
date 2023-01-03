@@ -57,7 +57,9 @@ PRODUCT_PACKAGES_DEBUG += \
 # Health HAL
 PRODUCT_PACKAGES += \
     android.hardware.health@2.1-impl.recovery
-
+    
+# API
+PRODUCT_SHIPPING_API_LEVEL := 29
 
 # Dynamic partitions
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
