@@ -40,6 +40,9 @@ AB_OTA_POSTINSTALL_CONFIG += \
     POSTINSTALL_PATH_vendor=bin/checkpoint_gc \
     FILESYSTEM_TYPE_vendor=ext4 \
     POSTINSTALL_OPTIONAL_vendor=true
+    
+# API
+PRODUCT_SHIPPING_API_LEVEL := 29
 
 # Boot control HAL
 PRODUCT_PACKAGES += \
@@ -57,9 +60,7 @@ PRODUCT_PACKAGES_DEBUG += \
 # Health HAL
 PRODUCT_PACKAGES += \
     android.hardware.health@2.1-impl.recovery
-    
-# API
-PRODUCT_SHIPPING_API_LEVEL := 29
+
 
 # Dynamic partitions
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
