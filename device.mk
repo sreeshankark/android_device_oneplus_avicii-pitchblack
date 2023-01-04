@@ -40,9 +40,6 @@ AB_OTA_POSTINSTALL_CONFIG += \
     POSTINSTALL_PATH_vendor=bin/checkpoint_gc \
     FILESYSTEM_TYPE_vendor=ext4 \
     POSTINSTALL_OPTIONAL_vendor=true
-    
-# API
-PRODUCT_SHIPPING_API_LEVEL := 29
 
 # Boot control HAL
 PRODUCT_PACKAGES += \
