@@ -1,5 +1,4 @@
 ro.display.series=Nord
-ro.product.board=lito
 ro.product.platform=lito
 vendor.gatekeeper.disable_spu=true
 ro.adb.secure=0
