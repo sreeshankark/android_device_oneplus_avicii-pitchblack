@@ -1,0 +1,15 @@
+CONFIG: config.sh
+env:
+    # Cirrus Specific Vars (Do *NOT* Change)
+    CIRRUS_SHELL: bash
+
+task:
+  name: "Recovery Build"
+  timeout_in: 120m
+  container:
+      image: openjdk:latest
+      cpu: 8
+      memory: 20G
+      
+  Build_script: 
+   - curl -sL https://raw.githubusercontent.com/Sanju0910/PitchBlack-CI/main/build.sh | bash
