@@ -11,8 +11,8 @@ inputs:
     default: Sync Latest Source
 env:
   CONFIG: config.sh
-  BUILD_RELEASE_TYPE: ${{ github.event.inputs.DEPLOY_TYPE }}
-  CHANGELOG: ${{ github.event.inputs.ChangeLogs }}
+  BUILD_RELEASE_TYPE: ${{ inputs.DEPLOY_TYPE }}
+  CHANGELOG: ${{ inputs.ChangeLogs }}
   BOT_API: ${{ secrets.BOT_API }}
   GCF_AUTH_KEY: ${{ secrets.GCF_AUTH_KEY }}
   GH_BOT_TOKEN: ${{ secrets.GH_BOT_TOKEN }}
