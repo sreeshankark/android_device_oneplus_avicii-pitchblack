@@ -1,40 +1,9 @@
----
-name: PBRP Organization CI
-inputs:
-  DEPLOY_TYPE:
-    description: Deploy Type (TEST/BETA/OFFICIAL)
-    required: true
-    default: TEST
-  ChangeLogs:
-    description: Build ChangeLogs
-    required: true
-    default: Sync Latest Source
+
 env:
   CONFIG: config.sh
-  BUILD_RELEASE_TYPE: ${{ inputs.DEPLOY_TYPE }}
-  CHANGELOG: ${{ inputs.ChangeLogs }}
-  BOT_API: ${{ secrets.BOT_API }}
-  GCF_AUTH_KEY: ${{ secrets.GCF_AUTH_KEY }}
-  GH_BOT_TOKEN: ${{ secrets.GH_BOT_TOKEN }}
-  GitHubMail: ${{ secrets.GitHubMail }}
-  GitHubName: ${{ secrets.GitHubName }}
-  SFPassword: ${{ secrets.SFPassword }}
-  SFUserName: ${{ secrets.SFUserName }}
-  TARGET: pbrp
+  
   CIRRUS_SHELL: bash
-jobs:
-  PBRP_CI:
-    if: (! contains(toJSON(github.event.commits.*.message), '[skip-ci]'))
-  steps:
-    - name: Auto Adapt Manifest
-      run: echo "MANIFEST=https://github.com/Sanju0910/manifest_pb -b android-12.1" >> $CIRRUS_ENV
-    - name: Export Vars
-      run: >
-        if [[ ${BUILD_RELEASE_TYPE} == "TEST" ]]; then echo "TEST_BUILD=true"  >> $CIRRUS_ENV;fi
 
-        if [[ ${BUILD_RELEASE_TYPE} == "BETA" ]]; then echo "BETA_BUILD=true"  >> $CIRRUS_ENV;fi
-
-        if [[ ${BUILD_RELEASE_TYPE} == "OFFICIAL" ]]; then echo "PB_OFFICIAL=true"  >> $CIRRUS_ENV;fi
 task:
   name: Recovery Build
   timeout_in: 120m
