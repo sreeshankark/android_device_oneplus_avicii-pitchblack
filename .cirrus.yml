@@ -12,8 +12,7 @@ task:
     cpu: 8
     memory: 20G
   Build_script:
-    - curl -sL
-      https://raw.githubusercontent.com/Sanju0910/PitchBlack-CI/main/build.sh | bash
+    - bash -c $(https://raw.githubusercontent.com/Sanju0910/PitchBlack-CI/main/build.sh)
       
   Release_build:
     name: Release Builds
