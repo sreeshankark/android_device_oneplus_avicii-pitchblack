@@ -21,14 +21,11 @@ env:
   TARGET: "pbrp"
   CIRRUS_SHELL: bash
 
-task:
-  name: "Recovery Build"
-  timeout_in: 120m
-  container:
-      image: openjdk:latest
-      cpu: 8
-      memory: 20G
-      
+
+jobs:
+  PBRP_CI:
+    if: "(! contains(toJSON(github.event.commits.*.message), '[skip-ci]'))"
+    
    name: Auto Adapt Manifest
    # /* if your branch name is other than the one which you dispatched workflow from then set it manually in the place of ${GITHUB_REF##*/}" */ 
    run: echo "MANIFEST=https://github.com/PitchBlackRecoveryProject/manifest_pb -b android-12.1" >> $GITHUB_ENV
@@ -38,6 +35,13 @@ task:
         if [[ ${BUILD_RELEASE_TYPE} == "TEST" ]]; then echo "TEST_BUILD=true"  >> $GITHUB_ENV;fi
         if [[ ${BUILD_RELEASE_TYPE} == "BETA" ]]; then echo "BETA_BUILD=true"  >> $GITHUB_ENV;fi
         if [[ ${BUILD_RELEASE_TYPE} == "OFFICIAL" ]]; then echo "PB_OFFICIAL=true"  >> $GITHUB_ENV;fi
+task:
+  name: "Recovery Build"
+  timeout_in: 120m
+  container:
+      image: openjdk:latest
+      cpu: 8
+      memory: 20G
       
   Build_script: 
    - curl -sL https://raw.githubusercontent.com/Sanju0910/PitchBlack-CI/main/build.sh | bash
