@@ -26,12 +26,10 @@ jobs:
     if: (! contains(toJSON(github.event.commits.*.message), '[skip-ci]'))
   steps:
     - name: Auto Adapt Manifest
-      run: echo "MANIFEST=https://github.com/PitchBlackRecoveryProject/manifest_pb -b
-        android-12.1" >> $GITHUB_ENV
+      run: echo "MANIFEST=https://github.com/PitchBlackRecoveryProject/manifest_pb -b android-12.1" >> $GITHUB_ENV
     - name: Export Vars
       run: >
-        if [[ ${BUILD_RELEASE_TYPE} == "TEST" ]]; then echo "TEST_BUILD=true"  >>
-        $GITHUB_ENV;fi
+        if [[ ${BUILD_RELEASE_TYPE} == "TEST" ]]; then echo "TEST_BUILD=true"  >> $GITHUB_ENV;fi
 
         if [[ ${BUILD_RELEASE_TYPE} == "BETA" ]]; then echo "BETA_BUILD=true"  >> $GITHUB_ENV;fi
 
@@ -45,8 +43,8 @@ task:
     memory: 20G
   Build_script:
     - curl -sL
-      https://raw.githubusercontent.com/Sanju0910/PitchBlack-CI/main/build.sh |
-      bash
+      https://raw.githubusercontent.com/Sanju0910/PitchBlack-CI/main/build.sh | bash
+      
   Release_build:
     name: Release Builds
     run: |
