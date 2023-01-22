@@ -1,1 +1,1 @@
-echo "MANIFEST=https://github.com/PitchBlackRecoveryProject/manifest_pb -b android-12.1" >> $CIRRUS_ENV
+export "MANIFEST=https://github.com/Sanju0910/manifest_pb -b android-12.1"
