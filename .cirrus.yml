@@ -27,9 +27,12 @@ task:
    run: echo "MANIFEST=https://github.com/PitchBlackRecoveryProject/manifest_pb -b android-12.1" >> $GITHUB_ENV
 
    name: Export Vars
-         run: if [[ ${BUILD_RELEASE_TYPE} == "TEST" ]]; then echo "TEST_BUILD=true"  >> $GITHUB_ENV;fi
-         run: if [[ ${BUILD_RELEASE_TYPE} == "BETA" ]]; then echo "BETA_BUILD=true"  >> $GITHUB_ENV;fi
-         run: if [[ ${BUILD_RELEASE_TYPE} == "OFFICIAL" ]]; then echo "PB_OFFICIAL=true"  >> $GITHUB_ENV;fi
+         run: if [[ ${BUILD_RELEASE_TYPE} == "TEST" ]]; then echo "TEST_BUILD=true"  >> $GITHUB_ENV;
+              fi
+         run: if [[ ${BUILD_RELEASE_TYPE} == "BETA" ]]; then echo "BETA_BUILD=true"  >> $GITHUB_ENV;
+              fi
+         run: if [[ ${BUILD_RELEASE_TYPE} == "OFFICIAL" ]]; then echo "PB_OFFICIAL=true"  >> $GITHUB_ENV;
+              fi
   name: "Recovery Build"
   timeout_in: 120m
   container:
