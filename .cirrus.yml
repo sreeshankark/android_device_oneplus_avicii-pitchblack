@@ -2,7 +2,6 @@ env:
     OEM: oneplus
     CODENAME: avicii
     CIRRUS_CI: true
-    GH_TOKEN: ENCRYPTED[!8f85cb8f85dd058e9bd506d3c39df388c3c401e07cc03eb090957e5a6c6f0f0e96b46f71048e78ac75bb6c2d1de59d6f!]
     CIRRUS_SHELL: bash
     TARGET: pbrp
     CR_NAME: pitchblack
@@ -20,12 +19,22 @@ task:
       image: ghcr.io/sanju0910/ubuntu:latest
       cpu: 8
       memory: 32G
+      
+  CLONE_SCRIPT_script: |
+    if [ -z "$CIRRUS_PR" ]; then
+      git clone --recursive --branch=$CIRRUS_BRANCH https://x-access-token:${CIRRUS_REPO_CLONE_TOKEN}@github.com/${CIRRUS_REPO_FULL_NAME}.git $CIRRUS_WORKING_DIR
+      git reset --hard $CIRRUS_CHANGE_IN_REPO
+    else
+      git clone --recursive https://x-access-token:${CIRRUS_REPO_CLONE_TOKEN}@github.com/${CIRRUS_REPO_FULL_NAME}.git $CIRRUS_WORKING_DIR
+      git fetch origin pull/$CIRRUS_PR/head:pull/$CIRRUS_PR
+      git reset --hard $CIRRUS_CHANGE_IN_REPO
+    fi    
 
-  SYNC_script:
+  SYNC_SCRIPT_script:
       - curl -sL https://raw.githubusercontent.com/Sanju0910/Cirrus_CI/main/scripts/sync.sh | bash
       
-  BUILD_script:
+  BUILD_SCRIPT_script:
       - curl -sL https://raw.githubusercontent.com/Sanju0910/Cirrus_CI/main/scripts/build.sh | bash
       
-  UPLOAD_script:
+  UPLOAD_SCRIPT_script:
       - curl -sL https://raw.githubusercontent.com/Sanju0910/Cirrus_CI/main/scripts/upload.sh | bash
