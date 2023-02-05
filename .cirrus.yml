@@ -10,7 +10,7 @@ env:
     CR_REPO: https://github.com/PitchBlackRecoveryProject/manifest_pb.git
     CR_BRANCH: android-12.1
     DT_REPO: https://github.com/Sanju0910/pitchblack_device_oneplus_avicii.git
-    DT_BRANCH: a12.1_fbev2
+    DT_BRANCH: android-12.1
     CIRRUS_CHANGE_TITLE: Building PithBlack Recovery for ${COMENAME} from ${OEM}
     CIRRUS_CHANGE_MESSAGE: Building PithBlack Recovery for ${COMENAME} from ${OEM}
     
