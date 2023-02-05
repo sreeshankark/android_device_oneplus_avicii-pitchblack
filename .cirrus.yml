@@ -11,10 +11,13 @@ env:
     CR_BRANCH: android-12.1
     DT_REPO: https://github.com/Sanju0910/pitchblack_device_oneplus_avicii.git
     DT_BRANCH: a12.1_fbev2
+    CIRRUS_CHANGE_TITLE: Building PithBlack Recovery for ${COMENAME} from ${OEM}
+    CIRRUS_CHANGE_MESSAGE: Building PithBlack Recovery for ${COMENAME} from ${OEM}
     
 task:
   name: "Recovery Build"
   timeout_in: 240m
+  trigger_type: manual
   container:
       image: ghcr.io/sanju0910/ubuntu:latest
       cpu: 8
