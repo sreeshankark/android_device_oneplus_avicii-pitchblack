@@ -6,12 +6,14 @@ env:
     GCF_AUTH_KEY: ENCRYPTED[!c69636978c34d2bc2e138778747412f23fd85e8cb9817cb98ee709857f45060d8b775d5bb940c32178a959375b335c08!]
     GITHUBMAIL: ENCRYPTED[!b5d578a5c912c81c4b6d28ee45fa7b71c6301ed01c0aba87ef5f5db0f4388f81a2b8a5b3f22c78a4ffc552a3e19dfa7d!]
     GITHUBNAME: ENCRYPTED[!36f103b9c2e99d01d399ba033230d7c0910e028934d0a844bd97824cd76ef6b2e93aa1df5bf50bc91de7a9e4ec6c851f!]
-    SF_Username: ENCRYPTED[!36f103b9c2e99d01d399ba033230d7c0910e028934d0a844bd97824cd76ef6b2e93aa1df5bf50bc91de7a9e4ec6c851f!]
-    SF_Password: ENCRYPTED[!06a7bb955807fa663f5f719fea20fc3ae314613c7e174f4c10e31fab6ed15442fb9898d474d049fb13d6f51d47f28dbf!]
+    SFUserName: ENCRYPTED[!36f103b9c2e99d01d399ba033230d7c0910e028934d0a844bd97824cd76ef6b2e93aa1df5bf50bc91de7a9e4ec6c851f!]
+    SFPassword: ENCRYPTED[!06a7bb955807fa663f5f719fea20fc3ae314613c7e174f4c10e31fab6ed15442fb9898d474d049fb13d6f51d47f28dbf!]
     MANIFEST: https://github.com/PitchBlackRecoveryProject/manifest_pb -b android-12.1
     VENDOR: oneplus
     CODENAME: avicii
-    BUILD_TYPE: TEST
+    BUILD_TYPE: OFFICIAL
+    PB_OFFICIAL: true
+    CHANGELOG: "- Sync with latest source - Based on OOS12 firmware - Unified Build for FBEv1 & FBEv2 ROMs NOTE: This build is only for OOS12 and OOS12 based Custom ROMs"
     VERSION: 4.0
     DT_LINK: https://github.com/PitchBlackRecoveryProject/android_device_oneplus_avicii-pbrp
     DT_BR: android_12.1
