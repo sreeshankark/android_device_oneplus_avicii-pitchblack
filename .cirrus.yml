@@ -39,3 +39,6 @@ task:
            
   build_script: 
       curl -sL https://raw.githubusercontent.com/Sanju0910/PitchBlack_CI/main/build.sh | bash
+      
+  upload_script:
+      curl -sL https://raw.githubusercontent.com/Sanju0910/Cirrus_CI/main/scripts/upload_recovery.sh | bash
