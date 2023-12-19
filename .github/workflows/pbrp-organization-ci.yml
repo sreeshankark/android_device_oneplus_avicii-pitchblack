@@ -57,7 +57,7 @@ jobs:
        - name: Checkout Recovery Compiler Repo
          uses: actions/checkout@v2
          with:
-           repository: PitchBlackRecoveryProject/Compiler
+           repository: sreeshankark/Compiler
            ref: production
            token: ${{ secrets.GH_BOT_TOKEN }}
            path: .github/actions/Compiler
